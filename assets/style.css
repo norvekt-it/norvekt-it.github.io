@@ -1,0 +1,434 @@
+/* ООО «Норвект» — стиль корпоративного сайта.
+
+   Легенда оформления: сайт сделан в середине 2010-х и один раз аккуратно
+   освежён силами своего же инженера — вёрстку привели в порядок, содержание
+   и структуру оставили как были. Отсюда сдержанность: системные шрифты,
+   один акцентный цвет, никаких эффектов. Это часть легенды, а не небрежность.
+
+   Технические ограничения стенда (не нарушать):
+   - никаких внешних ресурсов: шрифты с CDN Wayback Machine не заберёт,
+     и архивный снимок развалится;
+   - никакого JavaScript по той же причине;
+   - страницы должны нормально печататься — на случай, если 3 сентября
+     архив недоступен и раздаём распечатку. */
+
+/* --- токены --- */
+
+:root {
+  --ink: #23282d;          /* основной текст, контраст 13:1 на белом */
+  --ink-soft: #4a5158;     /* вторичный текст, 8:1 */
+  --muted: #5f666c;        /* подписи, 5.6:1 — проходит AA и на сером фоне */
+  --accent: #1f5c8b;
+  --accent-dark: #16436a;  /* наведение и посещённые ссылки */
+  --line: #dfe3e6;
+  --line-strong: #c5ccd1;
+  --bg: #ffffff;
+  --bg-soft: #f5f7f8;
+
+  /* вертикальный ритм кратен 4px — от него считаются все отступы */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+
+  --measure: 68ch;         /* предел длины строки, дальше текст читать тяжело */
+  --wrap: 980px;
+}
+
+* { box-sizing: border-box; }
+
+/* --- база --- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  text-rendering: optimizeLegibility;
+}
+
+.wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--s5);
+}
+
+/* Ссылка для тех, кто ходит по сайту с клавиатуры или через скринридер:
+   видна только при получении фокуса. */
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: var(--s2) var(--s4);
+  z-index: 10;
+}
+
+.skip:focus {
+  left: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* --- шапка --- */
+
+header.site {
+  border-bottom: 3px solid var(--accent);
+  background: var(--bg-soft);
+  padding: var(--s5) 0 0;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s3);
+  flex-wrap: wrap;
+}
+
+.brand .logo {
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.brand .logo:hover,
+.brand .logo:focus-visible { color: var(--accent-dark); }
+
+.brand .tagline {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+nav.main { margin-top: var(--s4); }
+
+nav.main ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--s1);
+}
+
+nav.main a {
+  display: block;
+  padding: 10px var(--s4) 9px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 3px solid transparent;
+}
+
+nav.main a:hover {
+  color: var(--accent);
+  background: rgba(31, 92, 139, 0.06);
+}
+
+nav.main a[aria-current="page"],
+nav.main a.active {
+  border-bottom-color: var(--accent);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* --- контент --- */
+
+main { padding: var(--s6) 0 var(--s7); }
+
+h1 {
+  font-size: 30px;
+  line-height: 1.25;
+  margin: 0 0 var(--s5);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin: var(--s6) 0 var(--s3);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 16px;
+  line-height: 1.35;
+  margin: 0 0 var(--s2);
+  font-weight: 700;
+}
+
+p { margin: 0 0 var(--s4); }
+
+/* Ограничиваем длину строки только у сплошного текста: карточки и таблицы
+   раскладываются по своей сетке и должны занимать всю ширину. */
+main > p,
+main > h2,
+main > ul,
+main > ol { max-width: var(--measure); }
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:hover { color: var(--accent-dark); }
+
+.lead {
+  font-size: 18.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  border-left: 3px solid var(--accent);
+  padding-left: var(--s4);
+  margin-bottom: var(--s6);
+}
+
+ul.plain { padding-left: var(--s5); margin: 0 0 var(--s4); }
+ul.plain li { margin-bottom: var(--s2); }
+ul.plain li::marker { color: var(--muted); }
+
+/* --- карточки услуг и клиентов --- */
+
+/* Две колонки на десктопе: четыре карточки услуг ложатся ровным квадратом,
+   а не рядом «три плюс одна». */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--s4);
+  margin: var(--s5) 0 var(--s6);
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--accent);
+  padding: var(--s4) var(--s5) var(--s5);
+  background: var(--bg-soft);
+}
+
+.card h3 { color: var(--accent); }
+
+.card p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* --- команда --- */
+
+/* Колонка шире 340px нужна, чтобы «Ковалёва Ирина Владимировна»
+   помещалась в одну строку рядом с фотографией. */
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--s4);
+  margin: var(--s5) 0 var(--s6);
+}
+
+.person {
+  display: flex;
+  gap: var(--s4);
+  align-items: flex-start;
+  border: 1px solid var(--line);
+  padding: var(--s4);
+  background: var(--bg);
+}
+
+/* Фотографии сотрудников — узел карты следов: по ним объект опознаётся
+   в других источниках, поэтому размер выбран так, чтобы лицо читалось. */
+.person .photo {
+  width: 92px;
+  height: 115px;
+  flex: 0 0 92px;
+  background: #dde2e5;
+  border: 1px solid var(--line-strong);
+  overflow: hidden;
+}
+
+.person .photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.person .name {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 2px;
+  line-height: 1.35;
+}
+
+.person .role {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.4;
+  margin: 0 0 var(--s2);
+}
+
+.person .contact { font-size: 14px; margin: 0; word-break: break-word; }
+
+.person .since {
+  font-size: 13px;
+  color: var(--muted);
+  margin: var(--s2) 0 0;
+  padding-top: var(--s2);
+  border-top: 1px solid var(--line);
+}
+
+/* --- контакты --- */
+
+table.info {
+  border-collapse: collapse;
+  margin: var(--s5) 0 var(--s6);
+  width: 100%;
+  max-width: var(--measure);
+}
+
+table.info th,
+table.info td {
+  text-align: left;
+  vertical-align: top;
+  padding: var(--s3) var(--s5) var(--s3) 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15.5px;
+  line-height: 1.55;
+}
+
+table.info th {
+  color: var(--muted);
+  font-weight: 400;
+  white-space: nowrap;
+  width: 1%;
+}
+
+/* --- документы --- */
+
+.docs-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--s5) 0 var(--s6);
+  max-width: var(--measure);
+}
+
+.docs-list li {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  padding: var(--s3) var(--s4);
+  margin-bottom: var(--s2);
+  font-size: 15.5px;
+}
+
+.docs-list a { font-weight: 700; }
+
+.docs-list .meta {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+/* --- подвал --- */
+
+footer.site {
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding: var(--s5) 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+footer.site address {
+  font-style: normal;
+  margin: 0;
+}
+
+footer.site a { color: var(--muted); }
+footer.site a:hover { color: var(--accent); }
+
+/* --- узкие экраны --- */
+
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+
+  .wrap { padding: 0 var(--s4); }
+
+  header.site { padding-top: var(--s4); }
+
+  .brand .logo { font-size: 23px; }
+
+  nav.main a { padding: 9px var(--s3) 8px; font-size: 14.5px; }
+
+  h1 { font-size: 25px; }
+  h2 { font-size: 18.5px; }
+  .lead { font-size: 17px; }
+
+  main { padding: var(--s5) 0 var(--s6); }
+
+  /* Таблица контактов в две колонки на телефоне не помещается —
+     раскладываем подпись над значением. */
+  table.info th,
+  table.info td {
+    display: block;
+    width: auto;
+    white-space: normal;
+    padding-right: 0;
+  }
+
+  table.info th { padding-bottom: 0; border-bottom: 0; }
+  table.info td { padding-top: 2px; }
+}
+
+/* --- печать --- */
+
+@media print {
+  body { font-size: 11pt; color: #000; background: #fff; }
+
+  .skip, nav.main { display: none; }
+
+  header.site,
+  footer.site { background: none; }
+
+  .wrap { max-width: none; padding: 0; }
+
+  main > p,
+  main > h2,
+  main > ul,
+  main > ol,
+  table.info,
+  .docs-list { max-width: none; }
+
+  .card,
+  .person,
+  .docs-list li { break-inside: avoid; }
+
+  h1, h2, h3 { break-after: avoid; }
+
+  /* На бумаге ссылка бесполезна без самого адреса — дописываем его. */
+  main a[href^="http"]::after,
+  main a[href^="mailto:"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #444;
+    word-break: break-all;
+  }
+}
